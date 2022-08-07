@@ -2,12 +2,12 @@ import { Question, Operation, QuestionType } from "./arithmetic.js";
 // handle question
 let question = new Question(QuestionType.Arithmetic, Operation.Addition, 2, 2, 2);
 let submitInstructionSection = document.getElementById("submitInstruction");
+let resultSection = document.getElementById("result");
 let answeredCorrectly = false;
 const input = document.getElementById("input");
 updateQuestion();
 // handle input
 input?.addEventListener('keydown', (event) => {
-    let resultSection = document.getElementById("result");
     // pressed Enter
     if (event.key === "Enter") {
         if (!answeredCorrectly) {
@@ -16,6 +16,7 @@ input?.addEventListener('keydown', (event) => {
                 if (parseInt(input.value) == question.answer) {
                     resultSection.innerHTML = "Correct!";
                     answeredCorrectly = true;
+                    resultSection.style.color = "var(--blue-green)";
                     if (submitInstructionSection != null) {
                         submitInstructionSection.innerHTML = "Press any key to continue";
                     }
@@ -23,6 +24,7 @@ input?.addEventListener('keydown', (event) => {
                 else {
                     // wrong answer
                     resultSection.innerHTML = `Wrong! The right answer is ${question.answer}`;
+                    resultSection.style.color = "var(--red)";
                 }
             }
         }
@@ -52,5 +54,8 @@ function updateQuestion() {
     }
     if (input != null) {
         input.value = "";
+    }
+    if (resultSection != null) {
+        resultSection.innerHTML = "";
     }
 }

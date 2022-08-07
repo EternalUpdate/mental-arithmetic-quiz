@@ -3,6 +3,7 @@
 :root {
     --background-blue: #7ECFC0;
     --darker-blue: #0b3029;
+    --blue-green: #009465;
     --bright-cream: #f9f6e5;
     --beige: #F2E3C9;
     --orange: #ff5227;
@@ -51,22 +52,28 @@ body {
 }
 
 .quiz-container p {
-    font-weight: 500;
+    font-weight: 200;
     font-size: 1.5rem;
 }
 
 #result {
     font-size: 1.75rem;
-
+    font-weight: 500;
 }
 
 input {
     padding: 1rem;
     margin: 1rem;
+    width: 100%;
     border: 0;
     border-bottom: 0.25rem solid var(--bright-cream);
     border-radius: 0.75rem;
-    font-size: 2.5rem;
+    font-size: 3rem;
+    text-align: center;
     background-color: var(--background-blue);
     color: var(--bright-cream)
+}
+
+input:focus {
+    outline: none;
 }
