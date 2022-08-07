@@ -66,12 +66,15 @@ export class Question {
     generateQuestion() {
         switch (this.type) {
             case QuestionType.Arithmetic:
-                return this.generateArithmeticQuestion();
+                this.generateArithmeticQuestion();
+                break;
             case QuestionType.EndNumber:
-                return this.generateEndDigitQuestion();
+                this.generateEndDigitQuestion();
+                break;
         }
         // update answer attribute
         this.getAnswer();
+        return this.text;
     }
     generateArithmeticQuestion() {
         let questionText = "";
