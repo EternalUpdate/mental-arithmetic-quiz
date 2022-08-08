@@ -12,7 +12,7 @@ let settings = {
 // get shared elements
 let submitInstructionSection = document.getElementById("submitInstruction");
 let resultSection = document.getElementById("result");
-let quizContainer = document.getElementsByClassName("quiz-container");
+let quizContainer = document.getElementsByClassName("quiz-container")[0];
 let answeredCorrectly = false;
 
 const answerInput = document.getElementById("answerInput") as HTMLInputElement | null;
@@ -60,32 +60,142 @@ answerInput?.addEventListener('keydown', (event) => {
 // handle settings
 const settingsButton = document.getElementById("settings");
 
+const settingsSaveButton = document.getElementById("settings-save-button");
+
+// handle settings – animations
 settingsButton?.addEventListener("click", () => {
-    // fade in / out animations
-    settingsButton.classList.toggle("active");
-    if (quizContainer != null) {
-        quizContainer[0].classList.toggle("hidden");
-    }
-
-    const allSettingsContainer = document.getElementsByClassName("all-settings");
-    if (allSettingsContainer != null) {
-        allSettingsContainer[0].classList.toggle("hidden");
-    }
-
-    if(settingsButton.classList.contains("active")) {
-        fadeOut(quizContainer[0]);
-        fadeIn(allSettingsContainer[0]);
-    } else {
-        fadeOut(allSettingsContainer[0]);
-        fadeIn(quizContainer[0]);
-    }
+    settingsAnimate();
 })
+
+// handle settings – logic
+settingsSaveButton?.addEventListener("click", () => {
+    // TODO: question type function
+    changeQuestionType();
+    changeOperationType();
+    changeNumberOfTerms();
+    changeMinNumberOfDigits();
+    changeMaxNumberOfDigits();
+
+    updateQuestion();
+
+    settingsAnimate();
+
+    console.log(`op: ${question.operation} nbTerms: ${question.numberOfTerms} minNbDigits: ${question.minNbDigits} maxNbDigits: ${question.maxNbDigits}`);
+})
+
+/**
+ * Changes the question's type to the type selected in the settings dropdown.
+ * @returns the new question type as a string or an empty string if it fails
+ */
+ function changeQuestionType(): string {
+    const questionTypesDropdown = document.getElementsByName("operationTypes")[0] as HTMLSelectElement | null;
+
+    if (questionTypesDropdown != null) {
+        switch (questionTypesDropdown.value) {
+            case ("arithmetic"):
+                question.type = QuestionType.Arithmetic;
+                break;
+            case("end number"):
+                question.type = QuestionType.EndNumber;
+                break;
+        }
+
+        return questionTypesDropdown?.value;
+    }
+
+    return "";
+}
+
+/**
+ * Changes the question's operation type to the type selected in the settings dropdown.
+ * @returns the new operation type as a string or an empty string if it fails
+ */
+function changeOperationType(): string {
+    const operationTypesDropdown = document.getElementsByName("operationTypes")[0] as HTMLSelectElement | null;
+
+    if (operationTypesDropdown != null) {
+        switch (operationTypesDropdown.value) {
+            case ("addition"):
+                question.operation = Operation.Addition;
+                break;
+            case("subtraction"):
+                question.operation = Operation.Subtraction;
+                break;
+            case("multiplication"):
+                question.operation = Operation.Multiplication;
+                break;
+            case("division"):
+                question.operation = Operation.Division;
+                break;
+        }
+
+        return operationTypesDropdown?.value;
+    }
+
+    return "";
+}
+
+/**
+ * Changes the question's number of terms to the number specified in the settings input.
+ * @returns the question's new number of terms or -1 if it fails
+ */
+function changeNumberOfTerms(): number {
+    const numberOfTermsInput = document.getElementsByName("number of terms")[0] as HTMLInputElement | null;
+
+    if (numberOfTermsInput != null) {
+        const newNumber = parseInt(numberOfTermsInput.value);
+
+        if (!isNaN(newNumber)) {
+            question.numberOfTerms = newNumber
+            return newNumber;
+        }
+    }
+
+    return -1;
+}
+
+/**
+ * Changes the question's minimum mumber of digits to the number specified in the settings input.
+ * @returns the question's new minimum number of digits or -1 if it fails
+ */
+function changeMinNumberOfDigits(): number {
+    const minNumDigitsInput = document.getElementsByName("minimum number of digits")[0] as HTMLInputElement | null;
+
+    if (minNumDigitsInput != null) {
+        const newNumber = parseInt(minNumDigitsInput.value);
+
+        if (!isNaN(newNumber)) {
+            question.minNbDigits = newNumber
+            return newNumber;
+        }
+    }
+
+    return -1;
+}
+
+/**
+ * Changes the question's maximum mumber of digits to the number specified in the settings input.
+ * @returns the question's new maximum number of digits or -1 if it fails
+ */
+function changeMaxNumberOfDigits(): number {
+    const maxNumDigitsInput = document.getElementsByName("maximum number of digits")[0] as HTMLInputElement | null;
+
+    if (maxNumDigitsInput != null) {
+        const newNumber = parseInt(maxNumDigitsInput.value);
+
+        if (!isNaN(newNumber)) {
+            question.maxNbDigits = newNumber
+            return newNumber;
+        }
+    }
+
+    return -1;
+}
 
 /**
  * Updates the question text.
  */
 function updateQuestion(): void {
-    console.log("update");
     answeredCorrectly = false;
     question.generateQuestion();
     console.log(`text: ${question.text} answer: ${question.answer}`)
@@ -112,7 +222,7 @@ function updateQuestion(): void {
  * Fades in a given HTMLElement.
  * @param element the element to fade in
  */
-function fadeIn(element: HTMLInputElement | Element): void {
+function fadeIn(element: HTMLInputElement | Element | HTMLElement): void {
     element.animate(
         { opacity: [0, 1]}, 
         { duration: 500,
@@ -125,11 +235,50 @@ function fadeIn(element: HTMLInputElement | Element): void {
  * Fades out a given HTMLElement.
  * @param element the element to fade in
  */
- function fadeOut(element: HTMLInputElement | Element): void {
+ function fadeOut(element: Element | HTMLElement): void {
     element.animate(
         { opacity: [1, 0]}, 
         { duration: 500,
             fill: "forwards"
         }
     );
+}
+
+/**
+ * Animates the fading in and out of the settings component.
+ */
+function settingsAnimate() {
+    const settingsButton = document.getElementById("settings");
+
+    const settingsSaveButton = document.getElementById("settings-save-button");
+
+    const allSettingsContainer = document.getElementsByClassName("all-settings")[0];
+
+    if (settingsButton != null) {
+        settingsButton.classList.toggle("active");
+        
+        if(settingsButton.classList.contains("active")) {
+            fadeOut(quizContainer);
+            fadeIn(allSettingsContainer);
+            if (settingsSaveButton != null) {
+                fadeIn(settingsSaveButton);
+            }
+        } else {
+            fadeOut(allSettingsContainer);
+            fadeIn(quizContainer);
+            if (settingsSaveButton != null) {
+                fadeOut(settingsSaveButton);
+            }
+        }
+    }
+    if (quizContainer != null) {
+        quizContainer.classList.toggle("hidden");
+    }
+
+    if (allSettingsContainer != null) {
+        allSettingsContainer.classList.toggle("hidden");
+    }
+    if (settingsSaveButton != null) {
+        settingsSaveButton.classList.toggle("hidden");
+    }
 }

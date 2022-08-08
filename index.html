@@ -18,57 +18,82 @@
                 <!-- Settings -->
                 <div class="settings-container">
                     <button id="settings">Settings</button>
-                    <div class="all-settings hidden">
-                        <!-- Question Types -->
-                        <div>
-                            <label for="" questionTypes>Question Type:</label>
-                            <select name="questionTypes">
-                                <option value="arithmetic">Arithmetic</option>
-                                <option value="end number">End Number</option>
-                            </select>
+                    <div class="settings-column">
+                        <div class="all-settings hidden">
+                            <!-- Question Types -->
+                            <div>
+                                <label for="" questionTypes
+                                    >Question Type:</label
+                                >
+                                <select name="questionTypes">
+                                    <option
+                                        value="arithmetic"
+                                        selected="selected"
+                                    >
+                                        Arithmetic
+                                    </option>
+                                    <!-- <option value="end number">End Number</option> -->
+                                </select>
+                            </div>
+                            <!-- Operation Types -->
+                            <div>
+                                <label for="" questionTypes
+                                    >Operation Type:</label
+                                >
+                                <select name="operationTypes">
+                                    <option
+                                        value="addition"
+                                        selected="selected"
+                                    >
+                                        Addition
+                                    </option>
+                                    <option value="subtraction">
+                                        Subtraction
+                                    </option>
+                                    <option value="multiplication">
+                                        Multiplication
+                                    </option>
+                                    <option value="division">Division</option>
+                                </select>
+                            </div>
+                            <!-- Number of Terms -->
+                            <div>
+                                <label for="number of terms"
+                                    >Number of Terms:</label
+                                >
+                                <input
+                                    class="settings-input"
+                                    name="number of terms"
+                                    value="2"
+                                />
+                            </div>
+                            <!-- Minimum Number of Digits -->
+                            <div>
+                                <label for="minimum number of digits"
+                                    >Minimum Number of Digits:</label
+                                >
+                                <input
+                                    class="settings-input"
+                                    name="minimum number of digits"
+                                    value="2"
+                                />
+                            </div>
+                            <!-- Maximum Number of Digits -->
+                            <div>
+                                <label for="maximum number of digits"
+                                    >Maximum Number of Digits:</label
+                                >
+                                <input
+                                    class="settings-input"
+                                    name="maximum number of digits"
+                                    value="2"
+                                />
+                            </div>
                         </div>
-                        <!-- Operation Types -->
-                        <div>
-                            <label for="" questionTypes>Operation Type:</label>
-                            <select name="operationTypes">
-                                <option value="addition">Addition</option>
-                                <option value="subtraction">Subtraction</option>
-                                <option value="multiplication">
-                                    Multiplication
-                                </option>
-                                <option value="division">Division</option>
-                            </select>
-                        </div>
-                        <!-- Number of Terms -->
-                        <div>
-                            <label for="number of terms"
-                                >Number of Terms:</label
-                            >
-                            <input
-                                class="settings-input"
-                                name="number of terms"
-                            />
-                        </div>
-                        <!-- Minimum Number of Digits -->
-                        <div>
-                            <label for="minimum number of digits"
-                                >Minimum Number of Digits:</label
-                            >
-                            <input
-                                class="settings-input"
-                                name="minimum number of digits"
-                            />
-                        </div>
-                        <!-- Maximum Number of Digits -->
-                        <div>
-                            <label for="maximum number of digits"
-                                >Maximum Number of Digits:</label
-                            >
-                            <input
-                                class="settings-input"
-                                name="maximum number of digits"
-                            />
-                        </div>
+                        <!-- Setting Save Button -->
+                        <button class="hidden" id="settings-save-button">
+                            Save
+                        </button>
                     </div>
                 </div>
                 <!-- The Quiz -->

@@ -144,6 +144,13 @@ a:hover {
     margin: 0;
 }
 
+.settings-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
 .hidden {
     display: none;
 }
@@ -197,6 +204,11 @@ a:hover {
     flex: 1 1 auto;
     transition: 0.5s;
     color: var(--beige);
+}
+
+#settings-save-button {
+    margin-top: 2rem;
+    font-size: 1.5rem;
 }
 
 /* @keyframes fadeIn {
