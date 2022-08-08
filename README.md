@@ -20,3 +20,4 @@ Built using Typescript, HTML, and CSS
 * Improve the question generation algorithm so that it includes more numbers with different digits
 * Keep track of settings locally
 * Mobile support
+* Input validation
