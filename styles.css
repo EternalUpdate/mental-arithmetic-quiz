@@ -73,12 +73,22 @@ select:focus {
     outline: none;
 }
 
+a {
+    font-weight: 400;
+    color: var(--red);
+}
+
+a:hover {
+    color: #ff9c22;
+    transition: 0.3s;
+}
+
 .app {
     display: flex;
     flex-direction: column;
     height: 100vh;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     background-color: var(--beige);
 
 }
@@ -119,6 +129,7 @@ select:focus {
 
 .all-settings {
     max-width: 100%;
+    display: grid;
     font-size: 1.1rem;
     color: var(--darker-blue);
     row-gap: 1rem;
@@ -135,6 +146,36 @@ select:focus {
 
 .hidden {
     display: none;
+}
+
+.header {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    color: var(--darker-blue);
+}
+
+.footer {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    color: var(--darker-blue);
+}
+
+.header p {
+    margin-left: 2rem;
+    margin-top: 2rem;
+}
+
+.footer p {
+    margin-right: 4rem;
+    margin-bottom: 2rem;
+    font-size: 1rem;
+    font-weight: 300;
 }
 
 #result {
