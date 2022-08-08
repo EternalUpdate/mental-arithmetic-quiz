@@ -1,22 +1,33 @@
 import { Question, Operation, QuestionType } from "./arithmetic.js";
-// handle question
-let question = new Question(QuestionType.Arithmetic, Operation.Addition, 2, 2, 2);
+// settings
+let settings = {
+    questionType: QuestionType.Arithmetic,
+    operation: Operation.Addition,
+    nbOfTerms: 2,
+    minNbDigits: 2,
+    maxNbDigts: 2
+};
+// get shared elements
 let submitInstructionSection = document.getElementById("submitInstruction");
 let resultSection = document.getElementById("result");
+let quizContainer = document.getElementsByClassName("quiz-container");
 let answeredCorrectly = false;
-const input = document.getElementById("input");
+const answerInput = document.getElementById("answerInput");
+// handle question
+let question = new Question(settings.questionType, settings.operation, settings.nbOfTerms, settings.minNbDigits, settings.maxNbDigts);
 updateQuestion();
 // handle input
-input?.addEventListener('keydown', (event) => {
+answerInput?.addEventListener('keydown', (event) => {
     // pressed Enter
     if (event.key === "Enter") {
         if (!answeredCorrectly) {
             if (resultSection != null) {
                 // correct answer
-                if (parseInt(input.value) == question.answer) {
+                if (parseInt(answerInput.value) == question.answer) {
                     resultSection.innerHTML = "Correct!";
                     answeredCorrectly = true;
-                    resultSection.style.color = "var(--blue-green)";
+                    resultSection.style.color = "var(--blue-yellow)";
+                    fadeIn(resultSection);
                     if (submitInstructionSection != null) {
                         submitInstructionSection.innerHTML = "Press any key to continue";
                     }
@@ -25,6 +36,7 @@ input?.addEventListener('keydown', (event) => {
                     // wrong answer
                     resultSection.innerHTML = `Wrong! The right answer is ${question.answer}`;
                     resultSection.style.color = "var(--red)";
+                    fadeIn(resultSection);
                 }
             }
         }
@@ -40,6 +52,30 @@ input?.addEventListener('keydown', (event) => {
         }
     }
 });
+// handle settings
+const settingsButton = document.getElementById("settings");
+settingsButton?.addEventListener("click", () => {
+    // fade in / out animations
+    settingsButton.classList.toggle("active");
+    if (quizContainer != null) {
+        quizContainer[0].classList.toggle("hidden");
+    }
+    const allSettingsContainer = document.getElementsByClassName("all-settings");
+    if (allSettingsContainer != null) {
+        allSettingsContainer[0].classList.toggle("hidden");
+    }
+    if (settingsButton.classList.contains("active")) {
+        fadeOut(quizContainer[0]);
+        fadeIn(allSettingsContainer[0]);
+    }
+    else {
+        fadeOut(allSettingsContainer[0]);
+        fadeIn(quizContainer[0]);
+    }
+});
+/**
+ * Updates the question text.
+ */
 function updateQuestion() {
     console.log("update");
     answeredCorrectly = false;
@@ -52,10 +88,28 @@ function updateQuestion() {
     if (submitInstructionSection != null) {
         submitInstructionSection.innerHTML = "Press 'Enter' to submit";
     }
-    if (input != null) {
-        input.value = "";
+    if (answerInput != null) {
+        answerInput.value = "";
     }
     if (resultSection != null) {
         resultSection.innerHTML = "";
     }
+}
+/**
+ * Fades in a given HTMLElement.
+ * @param element the element to fade in
+ */
+function fadeIn(element) {
+    element.animate({ opacity: [0, 1] }, { duration: 500,
+        fill: "forwards"
+    });
+}
+/**
+ * Fades out a given HTMLElement.
+ * @param element the element to fade in
+ */
+function fadeOut(element) {
+    element.animate({ opacity: [1, 0] }, { duration: 500,
+        fill: "forwards"
+    });
 }

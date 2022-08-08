@@ -3,7 +3,7 @@
 :root {
     --background-blue: #7ECFC0;
     --darker-blue: #0b3029;
-    --blue-green: #009465;
+    --blue-yellow: #caf37f;
     --bright-cream: #f9f6e5;
     --beige: #F2E3C9;
     --orange: #ff5227;
@@ -28,6 +28,51 @@ body {
     margin: 0;
 }
 
+button {
+    border: 0;
+    background-color: var(--background-blue);
+    color: var(--beige);
+    font-size: 1rem;
+}
+
+button:hover {
+    color: #229883;
+    transition: 0.5s;
+}
+
+button:active {
+    color: var(--beige);
+}
+
+label {
+    padding-right: 0.3rem;
+}
+
+input {
+    padding: 1rem;
+    margin: 1rem;
+    width: 100%;
+    border: 0;
+    border-bottom: 0.25rem solid var(--beige);
+    font-size: 3rem;
+    text-align: center;
+    background-color: var(--background-blue);
+    color: var(--beige)
+}
+
+input:focus {
+    outline: none;
+}
+
+select {
+    border: 0;
+    background-color: var(--background-blue);
+}
+
+select:focus {
+    outline: none;
+}
+
 .app {
     display: flex;
     flex-direction: column;
@@ -38,7 +83,7 @@ body {
 
 }
 
-.quiz-container {
+.quiz-card {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -51,9 +96,45 @@ body {
     /* box-shadow: 2px 2px 60px rgba(0, 0, 0, 0.2); */
 }
 
+.quiz-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
 .quiz-container p {
     font-weight: 200;
     font-size: 1.5rem;
+}
+
+.settings-container {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 4rem;
+}
+
+.all-settings {
+    max-width: 100%;
+    font-size: 1.1rem;
+    color: var(--darker-blue);
+    row-gap: 1rem;
+    flex: 2 1 auto;
+}
+
+.settings-input {
+    width: 1.5rem;
+    border-bottom: 0.1rem solid var(--beige);
+    font-size: 1.1rem;
+    padding: 0;
+    margin: 0;
+}
+
+.hidden {
+    display: none;
 }
 
 #result {
@@ -61,19 +142,23 @@ body {
     font-weight: 500;
 }
 
-input {
-    padding: 1rem;
-    margin: 1rem;
-    width: 100%;
-    border: 0;
-    border-bottom: 0.25rem solid var(--bright-cream);
-    border-radius: 0.75rem;
-    font-size: 3rem;
-    text-align: center;
-    background-color: var(--background-blue);
-    color: var(--bright-cream)
+#settings {
+    font-size: 1.3rem;
+    font-weight: 500;
+    margin: -2rem;
+    /* flex: 1 1 auto; */
 }
 
-input:focus {
-    outline: none;
+#settings.active {
+    font-size: 2rem;
+    font-weight: 500;
+    margin: -2rem;
+    flex: 1 1 auto;
+    transition: 0.5s;
+    color: var(--beige);
 }
+
+/* @keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+} */
