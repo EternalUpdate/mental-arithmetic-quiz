@@ -3,6 +3,9 @@
 ## Description
 A simple quiz to test mental arithmetic skills.
 
+## Link
+https://eternalupdate.github.io/mental-arithmetic-quiz/
+
 ## Technologies
 Built using Typescript, HTML, and CSS
 
@@ -19,3 +22,5 @@ Built using Typescript, HTML, and CSS
 * Randomize operators
 * Improve the question generation algorithm so that it includes more numbers with different digits
 * Keep track of settings locally
+* Mobile support
+* Input validation
