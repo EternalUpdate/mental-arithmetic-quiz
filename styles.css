@@ -111,6 +111,7 @@ a:hover {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    height: 95%;
 }
 
 .quiz-container p {
@@ -120,6 +121,7 @@ a:hover {
 
 .settings-container {
     width: 100%;
+    height: 5%;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -193,8 +195,7 @@ a:hover {
 #settings {
     font-size: 1.3rem;
     font-weight: 500;
-    margin: -2rem;
-    /* flex: 1 1 auto; */
+    margin: -3rem;
 }
 
 #settings.active {
@@ -210,8 +211,3 @@ a:hover {
     margin-top: 2rem;
     font-size: 1.5rem;
 }
-
-/* @keyframes fadeIn {
-    0% { opacity: 0; }
-    100% { opacity: 1; }
-} */
