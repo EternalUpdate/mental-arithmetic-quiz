@@ -89,7 +89,14 @@ export class Question {
 
     private generateArithmeticQuestion(): string {
         let questionText = "";
-        this.numbers = this.generateArrayOfQuestionNumbers();
+
+        switch (this.operation) {
+            case Operation.Division:
+                this.numbers = this.generateArithmeticDivisionNumbers();
+                break;
+            default:
+                this.numbers = this.generateArrayOfQuestionNumbers();
+        }
 
         for (let i = 0; i < this.numberOfTerms; i++) {
             if (i != this.numberOfTerms - 1) {
@@ -102,6 +109,43 @@ export class Question {
         this.text = questionText;
 
         return this.text;
+    }
+
+    public generateArithmeticDivisionNumbers(): number[] {
+        function isDivisible(nums: number[]): boolean {
+            let currentNum = 0, previousNum = 0;
+
+            console.log(nums);
+
+            for (let i = 0; i < nums.length; i++) {
+                currentNum = nums[i];
+
+                if (i === 0) {
+                    previousNum = currentNum;
+                } else {
+
+                    console.log(previousNum / currentNum);
+
+                    if ((previousNum % currentNum === 0)) {
+                        previousNum = previousNum / currentNum;
+                    } else {
+                        console.log("not divisible");
+
+                        return false;
+                    }
+                }
+             }
+
+            console.log("divisible");
+
+            return true;
+        }
+
+        do {
+            this.numbers = this.generateArrayOfQuestionNumbers();
+        } while (!isDivisible(this.numbers))
+
+        return this.numbers;
     }
 
     private generateEndDigitQuestion(): string {

@@ -233,3 +233,6 @@ function settingsAnimate() {
         settingsSaveButton.classList.toggle("hidden");
     }
 }
+// TEST
+let testQ = new Question(QuestionType.Arithmetic, Operation.Division, 2, 2, 3);
+console.log(testQ.generateArithmeticDivisionNumbers());
