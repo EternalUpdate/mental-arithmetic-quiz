@@ -42,26 +42,10 @@ export class Question {
      * Generates a number to be used in a question within the min and max number of digits specified.
      * @returns a number to be used in a question within the min and max number of digits specified
      */
-    generateQuestionNumber(avoidNums = [], min = NaN, max = NaN) {
-        // set default bounds, else use provided values
-        if (isNaN(min)) {
-            min = 10 ** (this.minNbDigits - 1); // ex. 2 -> 1 -> 10
-        }
-        if (isNaN(max)) {
-            max = 10 ** this.maxNbDigits - 1; // ex. 2 -> 100 -> 99
-        }
-        let n = this.getRandomNumber(min, max);
-        // don't choose a number that should be avoided
-        if (avoidNums.length > 0) {
-            while (avoidNums.includes(n)) {
-                n = this.getRandomNumber(min, max);
-                console.log(`min: ${min} max: ${max} n: ${n}`);
-            }
-            return n;
-        }
-        else {
-            return n;
-        }
+    generateQuestionNumber() {
+        const MIN = 10 ** (this.minNbDigits - 1); // ex. 2 -> 1 -> 10
+        const MAX = 10 ** this.maxNbDigits - 1; // ex. 2 -> 100 -> 99
+        return this.getRandomNumber(MIN, MAX);
     }
     /**
      * Generates an array of numbers to be used in questions up to the specified number of desired terms.
@@ -113,30 +97,53 @@ export class Question {
         return this.text;
     }
     generateArithmeticDivisionNumbers() {
-        let currentNum = 0, previousNum = 0, nums, avoidNums = [];
-        // sort generated numbers in descending order
-        // to have more chance of being able to divide it by bigger numbers
-        nums = this.generateArrayOfQuestionNumbers();
-        nums.sort().reverse();
-        for (let i = 0; i < this.numberOfTerms; i++) {
-            if (i === 0) {
-                // first number becomes the previous number for the second automatically
-                previousNum = nums[i];
-            }
-            else {
-                while (previousNum % currentNum != 0) {
-                    // generate a random number lower than the previous number until a divisor is found
-                    currentNum = this.generateQuestionNumber(avoidNums, 0, previousNum);
-                    // keep track of unfit divisors
-                    avoidNums.push(currentNum);
+        function getDivisors(n) {
+            let divisors = [];
+            for (let i = 1; i <= n; i++) {
+                if (n % i === 0) {
+                    divisors.push(i);
                 }
-                // clear the unfit divisors for next number
-                avoidNums = [];
-                // insert good divisor in array
-                nums[i] = currentNum;
-                // previous num becomes quotient of the last two good divisors
-                previousNum = previousNum / currentNum;
             }
+            return divisors;
+        }
+        function chooseRandom(numArray) {
+            const INDEX = Math.floor(Math.random() * (numArray.length));
+            return numArray[INDEX];
+        }
+        function getQuotient(numArray) {
+            let quotient = 0;
+            for (let i = 0; i < numArray.length; i++) {
+                if (i === 0) {
+                    quotient = numArray[i];
+                }
+                else {
+                    quotient = quotient / numArray[i];
+                }
+            }
+            return quotient;
+        }
+        let nums = [-1]; // added a number so the while condition has something to work with
+        let currentNum = 0, previousNum = 0, divisors, quotient = 1;
+        // protect against questions that are too easy
+        while (quotient == 1 || quotient == nums[0]) {
+            // generate the numbers
+            for (let i = 0; i < this.numberOfTerms; i++) {
+                if (i === 0) {
+                    // first number is set to previous number by default
+                    nums[i] = this.generateQuestionNumber();
+                    previousNum = nums[i];
+                }
+                else {
+                    // choose next number from the array of divisors of the previous number, so that it divides successfully
+                    divisors = getDivisors(previousNum);
+                    currentNum = chooseRandom(divisors);
+                    nums[i] = currentNum;
+                    // previous number becomes the quotient of the two last numbers
+                    previousNum = previousNum / currentNum;
+                }
+            }
+            // to check that the question isn't too easy
+            quotient = getQuotient(nums);
         }
         this.numbers = nums;
         return this.numbers;
